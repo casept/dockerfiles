@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 #declare and install runtime + build dependencies
 RUNDEPS="git sqlite dumb-init"
 BUILDDEPS="unzip ca-certificates openssl gcc musl-dev go"
