@@ -1,0 +1,27 @@
+version: '2'
+services:
+  syncthing:
+    image: casept/syncthing:armhf
+
+    #If we do not run ST in the host's network, non-relayed transfers do not work
+    network_mode: "host"
+    ports:
+      #Web GUI
+      - "8384:8384"
+      #Data transfer
+      - "22000:22000"
+      #LAN discovery
+      - "21027:21027/udp"
+    build: ../../build/syncthing
+    volumes:
+      - syncthing-data:/home/syncthing/.config/syncthing
+      - syncthing-files:/home/syncthing/files
+
+    restart: always
+
+
+volumes:
+  syncthing-data:
+    external: false
+  syncthing-files:
+    external: false

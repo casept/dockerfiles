@@ -1,0 +1,18 @@
+version: '2'
+services:
+  alpine-autobuild:
+    image: casept/alpine-autobuild:amd64
+    build: ../../build/alpine-autobuild
+    volumes:
+      #First, we need to link the host's docker client binary into the container
+      - /usr/bin/docker:/usr/bin/docker
+      #The docker client in the container needs to conmmunicate with the docker host to push images to hub
+      - /var/run/docker.sock:/var/run/docker.sock
+      #In addition, the docker client in the container needs access to your docker hub credentials
+      - ~/.docker/config.json:/root/.docker/config.json
+
+    environment:
+      #Set the docker hub user which uploads the images
+      - HUB_USER=casept
+      
+    restart: always

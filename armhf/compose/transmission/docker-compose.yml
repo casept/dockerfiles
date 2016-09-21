@@ -1,0 +1,32 @@
+version: '2'
+services:
+  transmission:
+    image: casept/transmission:armhf
+    build: ../../build/transmission
+    volumes:
+      - transmission-manual:/home/transmission
+      - /mnt/drive/torrents/manual:/mnt/drive/torrents/manual
+    #Mount the transmission config, make sure it's owned by the transmission user (UID 591) if you want to change settings via webinterface
+      - ./transmission.json:/home/transmission/settings.json
+    user: transmission
+    entrypoint:
+      - dumb-init
+      - transmission-daemon
+      - --foreground
+      - --config-dir
+      - /home/transmission
+      - --download-dir
+      - /mnt/drive/torrents/manual
+      - --peerport
+      - "4934"
+
+    ports:
+      - "4934:4934"
+      - "9091:9091"
+    restart: always
+
+
+ 
+volumes:
+  transmission-manual:
+    external: false

@@ -1,0 +1,33 @@
+version: '2'
+services:
+  openvpn: 
+    image: casept/openvpn:armhf
+    build: ../../build/openvpn
+
+    #We need to operate in the host's network namespace
+    network_mode: "host"
+
+    ports:
+      - "1194:1194"
+      - "1194:1194/udp"
+
+    volumes:
+      #Mount the openvpn server config
+      - ./server.conf:/etc/openvpn/server.conf
+
+      #Substitute the below paths to paths where you store these certificates
+       
+      #Mount server certs
+      - ../../../../secrets/openvpn/dh2048.pem:/etc/openvpn/dh2048.pem:ro
+
+      - ../../../../secrets/openvpn/server.crt:/etc/openvpn/server.crt:ro
+      - ../../../../secrets/openvpn/server.key:/etc/openvpn/server.key:ro
+      - ../../../../secrets/openvpn/ca.crt:/etc/openvpn/ca.crt:ro
+
+      #Mount TUN interface
+      - /dev/net/tun:/dev/net/tun
+
+    #Openvpn needs network interface configuration privileges
+    cap_add:
+      - NET_ADMIN
+    restart: always

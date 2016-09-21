@@ -1,0 +1,44 @@
+version: '2'
+services:
+  couchpotato:
+    image: casept/couchpotato:amd64
+    ports:
+      - "5050:5050"
+    build: ../../build/couchpotato
+    volumes:
+      - couchpotato-data:/home/couchpotato
+      - /mnt/drive/media/Movies:/mnt/drive/media/Movies
+      - /mnt/drive/torrents/couchpotato:/mnt/drive/torrents/couchpotato
+    restart: always
+
+
+  transmission:
+    image: casept/transmission:amd64
+    build: ../../build/transmission
+    volumes: 
+      - transmission-couchpotato:/home/transmission
+      - /mnt/drive/torrents/couchpotato:/mnt/drive/torrents/couchpotato
+    #Mount the transmission config, make sure it's owned by the transmission user (UID 973) if you want to change settings via webinterface
+      - ./transmission.json:/home/transmission/settings.json
+    user: transmission
+    entrypoint:
+      - dumb-init
+      - transmission-daemon
+      - --foreground
+      - --config-dir
+      - /home/transmission
+      - --download-dir
+      - /mnt/drive/torrents/couchpotato
+      - --peerport
+      - "4931"
+      
+    ports:
+      - "4931:4931"
+    restart: always
+
+
+volumes:
+  couchpotato-data:
+    external: false
+  transmission-couchpotato:
+    external: false

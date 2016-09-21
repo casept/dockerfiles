@@ -1,0 +1,56 @@
+version: '2'
+services:
+  zeronet:
+    image: casept/zeronet:amd64
+    ports:
+      - "43110:43110"
+    build: ../../build/zeronet
+    volumes:
+      - zeronet-data:/home/zeronet/
+      - zeronet-torcookie:/tor:rw
+    depends_on:
+      - tor
+
+    entrypoint:
+     - dumb-init
+     - python2
+     - /opt/ZeroNet/zeronet.py
+     - --ui_ip
+     - 0.0.0.0
+     - --size_limit
+     - "100"
+     - --data_dir
+     - /home/zeronet/data
+     - --log_dir
+     - /home/zeronet/logs
+
+     - --tor
+     - always
+     - --tor_controller
+     - tor:9051
+     - --tor_proxy
+     - tor:9050
+
+
+  tor:
+    image: casept/tor:amd64
+    build: ../../build/tor
+    entrypoint:
+      - dumb-init
+      - tor
+      - -f
+      - /etc/tor/torrc/torrc
+    volumes:
+     - tor-zeronet:/home/tor/
+     - ./torrc:/etc/tor/torrc/torrc:ro
+     - zeronet-torcookie:/tor:rw
+
+volumes:
+  zeronet-data:
+    external: false
+
+  tor-zeronet:
+    external: false
+
+  zeronet-torcookie:
+    external: false

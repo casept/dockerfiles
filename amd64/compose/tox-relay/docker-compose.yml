@@ -1,0 +1,15 @@
+version: '2'
+services:
+  tox:
+    image: casept/tox-relay:amd64
+    ports:
+      - "3389:3389"
+      - "33445:33445"
+    build: ../../build/tox-relay
+    volumes:
+      - tox-bootstrapd:/home/tox
+    restart: always
+
+volumes:
+  tox-bootstrapd:
+    external: false

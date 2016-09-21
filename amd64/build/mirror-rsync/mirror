@@ -1,0 +1,15 @@
+#!/bin/sh
+
+BASEDIR="/home/mirror"
+
+cd $BASEDIR
+#Rsync on start of script
+rsync -azh --delete --verbose $RSYNC_URL $RSYNC_DIR
+
+#Loop forever
+while true
+do
+#Rsync every hour
+sleep 1h
+rsync -azh --delete --verbose $RSYNC_URL $RSYNC_DIR
+done

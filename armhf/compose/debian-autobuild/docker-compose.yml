@@ -1,0 +1,23 @@
+version: '2'
+services:
+  debian-autobuild:
+    image: casept/debian-autobuild:armhf
+    build: ../../build/debian-autobuild
+    volumes:
+      #First, we need to link the host's docker client binary into the container
+      - /usr/bin/docker:/usr/bin/docker
+      #The docker client in the container needs to conmmunicate with the docker host to push images to hub
+      - /var/run/docker.sock:/var/run/docker.sock
+      #In addition, the docker client in the container needs access to your docker hub credentials
+      - ~/.docker/config.json:/root/.docker/config.json
+
+    environment:
+      #Set the docker hub user which uploads the images
+      - HUB_USER=casept
+      #Set the mirror which will be used during the build and in the final images
+      - MIRROR=http://ftp2.de.debian.org/debian 
+      
+    #Debbootstrap needs additional privileges in order to succeed
+    privileged: true
+
+    restart: always

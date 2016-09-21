@@ -1,0 +1,17 @@
+version: '2'
+services:
+  emby:
+    image: casept/emby:amd64
+    ports:
+      - "8096:8096"
+    build: ../../build/emby
+    volumes:
+      - emby-data:/home/emby
+      - /mnt/drive/media:/media
+    environment:
+      - MONO_GC_PARAMS=max-heap-size=256m
+    restart: always
+
+volumes:
+  emby-data:
+    external: false

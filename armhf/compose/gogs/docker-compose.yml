@@ -1,0 +1,24 @@
+version: '2'
+services:
+  gogs:
+    image: casept/gogs:armhf
+    ports:
+      - "3000:3000"
+    build: ../../build/gogs
+    volumes:
+      #Mount the custom config
+      - ./app.ini:/opt/gogs/custom/conf/app.ini
+      - gogs-misc:/home/gogs/data
+      - gogs-repos:/home/gogs/repositories
+      - gogs-logs:/home/gogs/logs
+    restart: always
+
+
+volumes:
+  gogs-misc:
+    external: false
+  gogs-repos:
+    external: false
+  gogs-logs:
+    external: false
+

@@ -1,0 +1,61 @@
+version: '2'
+services:
+  i2pd:
+    image: casept/i2pd:armhf
+    ports:
+      #I2Pd console, DO NOT EXPOSE TO WAN
+      - "7657:7657"
+      #I2Pd peer port
+      - "12580:12580"
+      - "12580:12580/udp"
+      #I2Pd HTTP proxy, point your browser's proxy config at this to browse eepsites
+      - "4444:4444"
+    build: ../../build/i2pd
+
+    volumes:
+      - i2pd-data:/home/i2pd
+    restart: always
+
+    #See https://i2pd.readthedocs.io/en/latest/configuration.html for help with these config options
+    entrypoint:
+      - dumb-init
+      - i2pd
+      - --datadir=/home/i2pd/.i2pd
+      #port used for communicating with peers
+      - --port=12580
+      #Bandwith limit (P=2048 Kbps)
+      - --bandwidth=1024
+      #The address and port to listen on for admin console connections
+      - --http.address=0.0.0.0
+      - --http.port=7657
+      #Enable authentication for admin console
+      - --http.auth=true
+      - --http.user=i2pd
+      #The password for HTTP admin console, CHANGE THIS!
+      - --http.pass=thisistotallynotadmin
+      #Configuration for the HTTP proxy
+      - --httpproxy.address=0.0.0.0
+      - --httpproxy.port=4444
+      - --httpproxy.enabled=true
+      # SOCKS proxy, enable if you need it
+      - --socksproxy.enabled=false
+      #SAM bridge configuration
+      - --sam.address=0.0.0.0
+      - --sam.port=7656
+      - --sam.enabled=true
+      #BOB control channel config, this is needed for I2P torrent clients
+      - --bob.address=0.0.0.0
+      - --bob.port=2827
+      - --bob.enabled=true
+      #I2CP configuration
+      - --i2cp.address=0.0.0.0
+      - --i2cp.port=7654
+      - --i2cp.enabled=true
+      #Limit the amount of tunnels to avoid the CPU turning into a fireball
+      - --limits.transittunnels=300
+      #Toggle floodfill
+      - --floodfill
+     
+volumes:
+  i2pd-data:
+    external: false

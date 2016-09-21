@@ -1,0 +1,2 @@
+## Allow other containers to use the SOCKS proxy provided by tor
+SOCKSListenAddress 0.0.0.0

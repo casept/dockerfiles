@@ -1,0 +1,35 @@
+version: '2'
+services:
+  rsync:
+    image: casept/mirror-rsync:amd64
+    build: ../../build/mirror-rsync
+    volumes:
+      - alpine-mirror:/home/mirror/alpine
+    environment:
+      - RSYNC_URL=rsync://rsync.alpinelinux.org/alpine/edge
+      - RSYNC_DIR=alpine
+
+    user: mirror
+    entrypoint:
+      - dumb-init
+      - mirror
+    restart: always
+
+  darkhttpd:
+    image: casept/darkhttpd:amd64
+    ports:
+      - "8080:8080"
+    build: ../../build/darkhttpd
+    volumes:
+    #The volume containing the files can be mounted readonly because the webserver does not need to write to it
+      - alpine-mirror:/home/mirror/alpine:ro
+    user: "252" 
+    entrypoint:
+      - dumb-init
+      - darkhttpd
+      - /home/mirror/alpine/
+    restart: always
+
+volumes:
+  alpine-mirror:
+    external: false

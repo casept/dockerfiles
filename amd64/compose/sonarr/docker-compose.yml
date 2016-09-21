@@ -1,0 +1,86 @@
+version: '2'
+services:
+  sonarr:
+    image: casept/sonarr:amd64
+    ports:
+      - "8989:8989"
+    build: ../../build/sonarr
+    volumes:
+      - sonarr-data:/home/sonarr
+      - /mnt/drive/media/TV:/mnt/drive/media/TV
+      - /mnt/drive/torrents/sonarr:/mnt/drive/torrents/sonarr
+      - /mnt/drive/media/Anime:/mnt/drive/media/Anime
+      #Path to drone factory, make sure the sonarr user (UID 575) has full r/w access
+      - /mnt/drive/sonarr/dronefactory:/mnt/drive/sonarr/dronefactory:rw
+    environment:
+      - MONO_GC_PARAMS=max-heap-size=256m
+    depends_on:
+      - transmission
+    
+    restart: always
+
+  transmission:
+    image: casept/transmission:amd64
+    build: ../../build/transmission
+    volumes:
+      - transmission-sonarr:/home/transmission
+      - /mnt/drive/torrents/sonarr:/mnt/drive/torrents/sonarr
+    #Mount the transmission config, make sure it's owned by the transmission user (UID 973) if you want to change settings via webinterface
+      - ./transmission.json:/home/transmission/settings.json
+    user: transmission
+    entrypoint:
+      - dumb-init
+      - transmission-daemon
+      - --foreground
+      - --config-dir
+      - /home/transmission
+      - --download-dir
+      - /mnt/drive/torrents/sonarr/
+      - --peerport
+      - "4932"
+
+    ports:
+      - "4932:4932"
+      - "4932:4932/udp"
+
+    restart: always
+
+
+  jackett-private:
+    image: casept/jackett-private:amd64
+    ports:
+      - "9117:9117"
+    build: ../../build/jackett-private
+    volumes:
+      - jackett-private:/home/jackett
+    restart: always
+
+    environment:
+      #Limit the amount of memory mono allocates to jackett
+      MONO_GC_PARAMS: max-heap-size=64m
+
+
+  jackett-public:
+    image: casept/jackett-public:amd64
+    ports:
+      - "9118:9117"
+    build: ../../build/jackett-public
+    volumes:
+      - jackett-public:/home/jackett
+    restart: always
+
+    environment:
+      #Limit the amount of memory mono allocates to jackett
+      MONO_GC_PARAMS: max-heap-size=64m
+
+ 
+volumes:
+  sonarr-data:
+    external: false
+  transmission-sonarr:
+    external: false
+
+  jackett-private:
+    external: false
+  jackett-public:
+    external: false
