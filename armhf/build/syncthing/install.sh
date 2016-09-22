@@ -1,7 +1,4 @@
 #!/bin/sh
-VERSION="0.14.7"
-ARCH="arm"
-
 BUILDDEPS="openssl gnupg"
 RUNDEPS="ca-certificates dumb-init"
 
@@ -11,8 +8,8 @@ apk add -U $BUILDDEPS $RUNDEPS
 mkdir -p /tmp/syncthing && cd /tmp/syncthing
 
 #Download
-wget "https://github.com/syncthing/syncthing/releases/download/v"$VERSION"/syncthing-linux-"$ARCH"-v"$VERSION".tar.gz"
-wget "https://github.com/syncthing/syncthing/releases/download/v"$VERSION"/sha256sum.txt.asc"
+wget "https://github.com/syncthing/syncthing/releases/download/v"$ST_VERSION"/syncthing-linux-"$ST_ARCH"-v"$ST_VERSION".tar.gz"
+wget "https://github.com/syncthing/syncthing/releases/download/v"$ST_VERSION"/sha256sum.txt.asc"
 
 
 #Download key and verify PGP signature
@@ -44,7 +41,7 @@ wget "https://github.com/syncthing/syncthing/releases/download/v"$VERSION"/sha25
 #}
 
 #Extract tarball and move binary
-tar -zxvf "syncthing-linux-"$ARCH"-v"$VERSION".tar.gz"
+tar -zxvf "syncthing-linux-"$ST_ARCH"-v"$ST_VERSION".tar.gz"
 mv syncthing*/syncthing /usr/local/bin/
 
 #Make sure binary is owned by root

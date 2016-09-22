@@ -1,4 +1,10 @@
 FROM casept/alpine-amd64:edge 
+
+#Syncthing version
+ENV ST_VERSION="0.14.7"
+#Processor architecture
+ENV ST_ARCH="amd64"
+
 COPY install.sh /usr/local/bin/
 RUN install.sh && rm /usr/local/bin/install.sh
 USER syncthing
