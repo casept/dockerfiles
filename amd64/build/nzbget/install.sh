@@ -2,7 +2,7 @@
 set -e
 
 BUILDDEPS="g++ make automake openssl-dev libxml2-dev git"
-RUNDEPS="ca-certificates openssl libxml2"
+RUNDEPS="ca-certificates openssl libxml2 libstdc++ dumb-init"
 
 apk update && apk add $BUILDDEPS $RUNDEPS
 
@@ -21,6 +21,12 @@ make install-strip
 addgroup -g 555 media
 adduser -D -h /home/nzbget -u 515 -S -s /bin/false -G media nzbget
 
+#Create and set permissions
+mkdir /home/nzbget/downloads && chown -R nzbget:media /home/nzbget/downloads
+mkdir /home/nzbget/misc && chown -R nzbget:media /home/nzbget/misc
+
+#Make sure user can write nzbget config file
+chown nzbget:media /home/nzbget/nzbget.conf
 
 #Cleanup
 apk del $BUILDDEPS
