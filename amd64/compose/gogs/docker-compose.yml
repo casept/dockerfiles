@@ -3,7 +3,10 @@ services:
   gogs:
     image: casept/gogs:amd64
     ports:
+      #Web interface
       - "3000:3000"
+      #SSH port
+      - "2222:2222"
     build: ../../build/gogs
     volumes:
       #Mount the custom config
@@ -11,6 +14,7 @@ services:
       - gogs-misc:/home/gogs/data
       - gogs-repos:/home/gogs/repositories
       - gogs-logs:/home/gogs/logs
+      - gogs-ssh:/home/gogs/.ssh
     restart: always
 
 
@@ -21,4 +25,5 @@ volumes:
     external: false
   gogs-logs:
     external: false
-
+  gogs-ssh:
+    external: false

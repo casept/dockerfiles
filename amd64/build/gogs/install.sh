@@ -2,7 +2,7 @@
 set -e
 
 #declare and install runtime + build dependencies
-RUNDEPS="git sqlite dumb-init"
+RUNDEPS="git sqlite dumb-init openssh-client"
 BUILDDEPS="unzip ca-certificates openssl gcc musl-dev go"
 RUNDIR="/opt/gogs"
 
@@ -25,6 +25,7 @@ adduser -h /home/gogs -S -D -s /bin/false -u 438 gogs
 mkdir -p /home/gogs/data
 mkdir -p /home/gogs/repositories
 mkdir -p /home/gogs/logs
+mkdir -p /home/gogs/data/ssh
 
 chown -R gogs /home/gogs/data
 chown -R gogs /home/gogs/repositories
