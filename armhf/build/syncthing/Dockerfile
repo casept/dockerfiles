@@ -1,7 +1,7 @@
 FROM casept/alpine-armhf:edge 
 
 #Syncthing version
-ENV ST_VERSION="0.14.8"
+ENV ST_VERSION="0.14.9"
 #Processor architecture
 ENV ST_ARCH="armhf"
 
