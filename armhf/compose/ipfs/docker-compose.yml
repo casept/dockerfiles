@@ -1,0 +1,28 @@
+version: '2'
+services:
+  go-ipfs:
+    image: casept/go-ipfs:armhf
+    ports:
+      #Allow access to the gateway
+      - "8080:8080"
+      #P2P port
+      - "4001:4001"
+      #API port, only uncomment if you've firewalled it properly
+      - "5001:5001"
+
+    build: ../../build/go-ipfs
+    volumes:
+      - ipfs-data:/home/ipfs/
+
+  ipfs-webui:
+    image: casept/ipfs-webui:armhf
+    ports:
+      #Expose the webui port
+      - "3000:3001"
+    build: ../../build/ipfs-webui
+    depends_on:
+      - go-ipfs
+
+volumes:
+  ipfs-data:
+    external: false
