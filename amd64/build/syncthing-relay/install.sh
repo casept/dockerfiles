@@ -1,23 +1,34 @@
 #!/bin/sh
+set -e
 
-BUILDDEPS="go git gcc musl-dev"
+BUILDDEPS="libressl gnupg git go musl-dev"
 RUNDEPS="ca-certificates dumb-init"
 
 apk add -U $BUILDDEPS $RUNDEPS
 
-mkdir -p ~/src/github.com/syncthing && cd ~/src/github.com/syncthing
+mkdir -p /gopath/src/github.com/syncthing
+cd /gopath/src/github.com/syncthing
 
-git clone https://github.com/syncthing/syncthing
+#Download
+wget "https://github.com/syncthing/syncthing/archive/v"$ST_VERSION".tar.gz"
 
+#Extract tarball and compile
+tar -zxvf "v"$ST_VERSION".tar.gz"
+mv "syncthing-"$ST_VERSION syncthing
 cd syncthing
-go run build.go
+go run build.go -no-upgrade -version "v"$ST_VERSION
+cp bin/strelaysrv /usr/local/bin/strelaysrv
 
-mv /root/src/github.com/syncthing/syncthing/bin/strelaysrv /usr/local/bin/
+#Make sure binary is owned by root
+chown root:root /usr/local/bin/strelaysrv
 
 #Add relay user
-adduser -S -h /home/relay -u 8737 relay
+adduser -S -h /home/strelaysrv -u 8737 strelaysrv
 
+#The syncthing user needs proper access to directories that will be volume mounted, otherwise docker makes them owned by root
+mkdir -p /home/strelaysrv/keys
+chown -R strelaysrv /home/strelaysrv/keys
 
 #Cleanup
 apk del $BUILDDEPS && rm -rf /var/cache/apk*
-rm -rf /root/pkg /root/src
+rm -rf /gopath
