@@ -1,7 +1,7 @@
 FROM casept/alpine-amd64:edge 
 
 #Syncthing version
-ENV ST_VERSION="0.14.11"
+ENV ST_VERSION="0.14.12"
 #Processor architecture
 ENV ST_ARCH="amd64"
 
