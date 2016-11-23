@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 BUILDDEPS="libressl gnupg git go musl-dev"
 RUNDEPS="ca-certificates dumb-init"
 
