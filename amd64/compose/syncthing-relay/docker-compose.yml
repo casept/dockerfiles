@@ -1,13 +1,13 @@
 version: '2'
 services:
-  syncthing-relay:
-    image: casept/syncthing-relay:amd64
+  strelaysrv:
+    image: casept/strelaysrv:amd64
     ports:
       - "22067:22067"
-    build: ../../build/syncthing-relay
+    build: ../../build/strelaysrv
     volumes:
-      - strelaysrv-data:/home/relay
-    user: relay 
+      - strelaysrv-data:/home/strelaysrv
+    user: strelaysrv
     entrypoint:
       - dumb-init
       - strelaysrv
