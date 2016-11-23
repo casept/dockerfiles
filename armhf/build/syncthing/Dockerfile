@@ -2,8 +2,6 @@ FROM casept/alpine-armhf:edge
 
 #Syncthing version
 ENV ST_VERSION="0.14.12"
-#Processor architecture
-ENV ST_ARCH="armhf"
 
 COPY install.sh /usr/local/bin/
 RUN install.sh && rm /usr/local/bin/install.sh
