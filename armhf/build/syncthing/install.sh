@@ -14,7 +14,7 @@ wget "https://github.com/syncthing/syncthing/archive/v"$ST_VERSION".tar.gz"
 tar -zxvf "v"$ST_VERSION".tar.gz"
 mv "syncthing-"$ST_VERSION syncthing
 cd syncthing
-go run build.go -no-upgrade
+go run build.go -no-upgrade -version "v"$ST_VERSION
 cp bin/syncthing /usr/local/bin/syncthing
 
 #Make sure binary is owned by root
