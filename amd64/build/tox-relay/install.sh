@@ -1,4 +1,5 @@
 #!/bin/ash
+set -e
 #declare build and runtime dependencies here
 BUILDDEPS="autoconf libtool gcc automake make musl-dev git libsodium-dev linux-headers openssl"
 RUNDEPS="libsodium libconfig-dev dumb-init"
