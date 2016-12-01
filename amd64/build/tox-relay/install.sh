@@ -22,11 +22,11 @@ addgroup tox tox
 
 #download and compile tox
 mkdir -p $TEMPDIR && cd $TEMPDIR
-wget https://github.com/irungentoo/toxcore/archive/master.tar.gz  
+wget https://github.com/TokTok/c-toxcore/archive/master.tar.gz
 tar -zxf master.tar.gz
 rm master.tar.gz
 
-cd $TEMPDIR/toxcore-master
+cd $TEMPDIR/c-toxcore-master
 ./autogen.sh
 #TODO: disable LAN discovery support (it requires kernel headers and isn't needed for the daemon)
 ./configure --enable-daemon
