@@ -8,8 +8,9 @@ general:
 
 dependencies:
   override:
-    - docker build --rm=false -t casept/zeronet:amd64 zeronet
-
+    - export ARCH=amd64
+    - export HUB_USER=$DOCKER_USER 
+    - ../../ci/build.sh
 test:
   override:
     - /bin/true
