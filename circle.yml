@@ -2,6 +2,9 @@ machine:
   services:
     - docker
 
+general:
+  build_dir: amd64/build 
+
 deployment:
   hub: 
     branch: master
