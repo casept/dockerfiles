@@ -5,6 +5,10 @@ machine:
 general:
   build_dir: amd64/build 
 
+test:
+  override:
+    - /bin/true
+
 deployment:
   hub: 
     branch: master
