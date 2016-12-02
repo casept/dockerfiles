@@ -2,15 +2,13 @@ machine:
   services:
     - docker
 
-general:
-  build_dir: amd64/build 
 
 
 dependencies:
   override:
     - export ARCH=amd64
     - export HUB_USER=$DOCKER_USER 
-    - ../../ci/build.sh
+    - ci/build.sh 
 test:
   override:
     - /bin/true
