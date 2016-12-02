@@ -8,7 +8,8 @@ general:
 
 test:
   override:
-    docker build -t casept/zeronet:amd64 zeronet
+    - docker build -t casept/zeronet:amd64 zeronet
+
 deployment:
   hub: 
     branch: master
