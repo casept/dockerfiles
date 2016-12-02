@@ -5,10 +5,10 @@ machine:
 general:
   build_dir: amd64/build 
 
+
 test:
   override:
-    - /bin/true
-
+    docker build -t casept/zeronet:amd64 zeronet
 deployment:
   hub: 
     branch: master
