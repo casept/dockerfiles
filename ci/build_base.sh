@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 build_amd64_base()  {
 cd amd64/compose
 	cd debian-autobuild
