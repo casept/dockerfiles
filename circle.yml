@@ -11,8 +11,8 @@ dependencies:
     - gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys F76221572C52609D 
     - gpg --export --armor F76221572C52609D | sudo apt-key add -
     #Install pip
-    - apt update
-    - apt install python3-pip
+    - sudo apt update
+    - sudo apt install python3-pip
     #Install docker-compose
     - pip3 install --update docker-compose
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
