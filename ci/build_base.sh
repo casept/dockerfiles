@@ -9,5 +9,5 @@ cd amd64/compose
 	docker-compose up --build
 }
 
-build_amd64
+build_amd64_base
 
