@@ -5,6 +5,8 @@ machine:
 dependencies:
   override:
     #Update docker-compose
+    - apt update
+    - apt install python3-pip
     - pip3 install --update docker-compose
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - ci/build_base.sh
