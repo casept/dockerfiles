@@ -4,6 +4,7 @@ machine:
 
 dependencies:
   override:
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - ci/build_base.sh
     - ci/build.sh
 
