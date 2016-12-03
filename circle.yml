@@ -14,8 +14,8 @@ dependencies:
     - sudo apt update
     - sudo apt install python3-pip
     #Install docker-compose
-    - pip3 install --update docker-compose
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - sudo pip3 install --update docker-compose
+    - sudo docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - ci/build_base.sh
     - ci/build.sh
 
