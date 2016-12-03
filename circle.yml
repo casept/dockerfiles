@@ -4,6 +4,7 @@ machine:
 
 dependencies:
   override:
+    - ci/build_base.sh
     - ci/build.sh
 
 test:
