@@ -125,3 +125,4 @@ build_all ()	{
 #Main
 #Build all on script start
 build_all
+exit 0
