@@ -125,10 +125,4 @@ build_all ()	{
 #Main
 #Build all on script start
 build_all
-
-#Rebuild every 24h
-while :
-	do
-		sleep 24h
-		build_all
-	done
+exit 0
