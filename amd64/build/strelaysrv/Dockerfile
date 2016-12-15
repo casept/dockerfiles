@@ -1,7 +1,7 @@
 FROM casept/alpine-amd64:edge
 
 #Syncthing version
-ENV ST_VERSION="0.14.13"
+ENV ST_VERSION="0.14.14"
 
 COPY install.sh /usr/local/bin/
 RUN install.sh && rm /usr/local/bin/install.sh
