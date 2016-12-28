@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 BUILDDEPS="wget gnupg"
 RUNDEPS="emby-server-beta ffmpeg dumb-init"
 
