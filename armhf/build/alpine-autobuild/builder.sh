@@ -99,6 +99,7 @@ build_all ()	{
 	#Build rootfs
 	build_rootfs edge
 	build_rootfs latest-stable
+	build_rootfs v3.5
 	build_rootfs v3.4
 	build_rootfs v3.3
 	echo "All rootfs built, now building docker images."
@@ -109,6 +110,7 @@ build_all ()	{
 	#Alpine version 3.2 and below requires differrent configuration which I'm too lazy to figure out
 	build_image edge          edge
 	build_image latest-stable latest
+	build_image v3.5          3.5
 	build_image v3.4          3.4
 	build_image v3.3          3.3
 	echo "Docker images built successfully."
@@ -117,6 +119,7 @@ build_all ()	{
 	echo "Pushing to docker hub"
 	push_image edge 
 	push_image latest
+	push_image 3.5
 	push_image 3.4
 	push_image 3.3
 	echo "All images pushed successfully."
