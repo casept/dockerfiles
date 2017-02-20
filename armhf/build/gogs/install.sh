@@ -10,11 +10,11 @@ apk add -U $RUNDEPS $BUILDDEPS
 
 export GOPATH=/opt/go
 echo "Fetching dependencies"
-go get -u -tags "sqlite" github.com/gogits/gogs
+go get -u -v -tags "sqlite" github.com/gogits/gogs
 cd $GOPATH/src/github.com/gogits/gogs
 
 echo "Building gogs"
-go build -tags "sqlite"
+go build -v -tags "sqlite"
 
 #Move gogs into permanent location
 mkdir -p /opt/gogs && mv * /opt/gogs/
