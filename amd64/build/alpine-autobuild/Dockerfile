@@ -9,6 +9,6 @@ COPY builder.sh /usr/local/bin/
 #The images will be named using the format $HUB_USER/alpine-$ARCH:$VERSION
 ENV ARCH=x86_64
 
-ENV MIRROR=http://nl.alpinelinux.org/alpine/
+ENV MIRROR=http://dl-cdn.alpinelinux.org/alpine/
 
 ENTRYPOINT ["builder.sh"]
