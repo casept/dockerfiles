@@ -14,15 +14,6 @@ services:
     volumes:
       - ipfs-data:/home/ipfs/
 
-  ipfs-webui:
-    image: casept/ipfs-webui:amd64
-    ports:
-      #Expose the webui port
-      - "3000:3001"
-    build: ../../build/ipfs-webui
-    depends_on:
-      - go-ipfs
-
 volumes:
   ipfs-data:
     external: false
