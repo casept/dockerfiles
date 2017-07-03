@@ -49,18 +49,21 @@ build_all ()	{
 	#Turn those rootfs tarballs into docker images
 	#Specify which tag to use in the format build_image NAME_OF_ROOTFS DOCKER_TAG
 	build_image jessie jessie
-	build_image jessie latest
-	build_image jessie stable
+	build_image jessie oldstable
 	build_image jessie 8
 
-	build_image wheezy oldstable
 	build_image wheezy wheezy
 	build_image wheezy 7
 
 	build_image stretch stretch
-	build_image stretch testing
+	build_image stretch stable 
+	build_image stretch latest 
 	build_image stretch 9
 
+	build_image buster buster 
+	build_image buster testing 
+	build_image buster 10 
+	
 	build_image sid sid	
 	build_image sid unstable
 	echo "Docker images built successfully."
@@ -68,17 +71,20 @@ build_all ()	{
 	#Push images to docker hub
 	echo "Pushing to docker hub"
 	push_image jessie
-	push_image latest
-	push_image stable
+	push_image oldstable
 	push_image 8
 
-	push_image oldstable
 	push_image wheezy
 	push_image 7
 
 	push_image stretch
-	push_image testing
+	push_image stable
+	push_image latest
 	push_image 9
+
+	push_image buster 
+	push_image testing
+	push_image 10
 
 	push_image sid
 	push_image unstable
